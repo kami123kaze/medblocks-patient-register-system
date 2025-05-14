@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getDB } from '../lib/db';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,12 +15,26 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Save to Pglite
-    console.log("Registered:", form);
-    navigate("/patients");
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+       
+           const db = await getDB(); // Initialize and check if DB exists 
+           await db.exec({
+    sql: 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)',
+    args: [form.name, form.dob, form.email, form.phone],
+  });
+
+  console.log("Registered:", form);
+
+  // Fetch and log the newly inserted data {Debugging}
+  const result = await db.query('SELECT * FROM patients');
+  console.log('Updated Patients List:', result.rows);
+
+  // Redirect to patients page
+  navigate("/patients");
+    };
+
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-br from-black via-[#0f172a] to-[#1e293b] text-white">

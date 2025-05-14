@@ -8,4 +8,17 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  optimizeDeps: {
+    exclude: ['@electric-sql/pglite'], 
+  },
+  build: {
+    target: 'esnext', 
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          wasm: ['@electric-sql/pglite'], 
+        },
+      },
+    },
+  },
 })

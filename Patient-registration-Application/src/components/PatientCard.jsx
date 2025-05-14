@@ -7,7 +7,8 @@ const PatientCard = ({ patient }) => {
         <h2 className="text-xl font-bold text-white">{patient.name}</h2>
         <span className="text-sm text-gray-400">{patient.id}</span>
       </div>
-
+       
+      <p className="text-gray-200 mb-2"><strong>Unique ID: </strong>{patient.id}</p>
       <p className="text-gray-200 mb-2"><strong>Date of Birth: </strong>{patient.dob}</p>
       <p className="text-gray-200 mb-2"><strong>Email: </strong>{patient.email}</p>
       <p className="text-gray-200 mb-4"><strong>Phone: </strong>{patient.phone}</p>

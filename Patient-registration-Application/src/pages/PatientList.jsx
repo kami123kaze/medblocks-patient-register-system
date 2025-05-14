@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PatientCard from "../components/PatientCard";
-
-const dummyPatients = [
-  { id: 1, name: "John Doe", dob: "1992-04-01", email: "john@example.com", phone: "123-456-7890" },
-  { id: 2, name: "Jane Smith", dob: "1988-07-22", email: "jane@example.com", phone: "987-654-3210" },
-];
+import { getDB } from '../lib/db';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-    setPatients(dummyPatients);
+     const fetchPatients = async () => {
+
+      const db = await getDB(); // Initialize db
+      const result = await db.query('SELECT * FROM patients');
+      console.log(result.rows);
+      
+      setPatients(result.rows);
+      
+    };
+
+    fetchPatients();
   }, []);
 
   return (
