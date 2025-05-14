@@ -1,1 +1,3 @@
-export { default as Dummy } from './Dummy';  
+import Home from "./Home";
+
+export {Home};

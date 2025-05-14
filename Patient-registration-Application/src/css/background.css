@@ -1,0 +1,26 @@
+.square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  animation: move 20s linear infinite;
+  top: calc(100% * var(--i));
+  left: calc(100% * var(--j));
+  animation-delay: calc(var(--i) * -1s);
+  border-radius: 4px;
+}
+
+.square:nth-child(even) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes move {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
