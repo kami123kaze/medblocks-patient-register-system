@@ -32,7 +32,7 @@ const Home = () => {
               to="/patients"
                     className="inline-block px-6 py-3 bg-transparent border-2 border-white/50 hover:bg-white/20 transition rounded-xl text-white text-center"            >
               View Registered Patients
-            </Link>  {/*To BE Done */ }
+            </Link>  
           </div>
         </div>
       </div>
