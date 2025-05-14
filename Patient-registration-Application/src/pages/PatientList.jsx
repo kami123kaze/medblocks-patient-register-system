@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PatientCard from "../components/PatientCard"; // Import PatientCard
+import PatientCard from "../components/PatientCard";
 
 const dummyPatients = [
   { id: 1, name: "John Doe", dob: "1992-04-01", email: "john@example.com", phone: "123-456-7890" },
@@ -10,28 +10,43 @@ const dummyPatients = [
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
 
-  // Placeholder for fetching data, we'll replace this later when dynamic data available
   useEffect(() => {
     setPatients(dummyPatients);
   }, []);
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-gray-900">
-      <div className="absolute inset-0 z-0 backdrop-blur-md bg-white/10"></div>
+    <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-br from-black via-[#1a0c1e] to-[#2e0d29] text-white">
+      {/* Subtle glowing overlays */}
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-pink-700 opacity-10 blur-[120px] rounded-full z-0" />
+      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-fuchsia-900 opacity-10 blur-[100px] rounded-full z-0" />
+
+      {/* Moving Squares (can disable if too distracting) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <span key={i} className="square" />
+        ))}
+      </div>
+
+      {/* Glossy dark overlay */}
+      <div className="absolute inset-0 backdrop-blur-md bg-black/30 z-10" />
+
+      {/* Foreground Content */}
       <div className="relative z-20 flex items-center justify-center h-full p-4">
-        <div className="bg-white/10 backdrop-blur-lg p-10 rounded-2xl text-white w-full max-w-4xl">
-          <h1 className="text-3xl font-bold mb-6 text-center">Registered Patients</h1>
+        <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-10 rounded-2xl w-full max-w-6xl shadow-2xl">
+          <h1 className="text-3xl font-semibold mb-6 text-center text-white drop-shadow">
+            Registered Patients
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {patients.map((patient) => (
-              <PatientCard key={patient.id} patient={patient} /> // Use PatientCard here
+              <PatientCard key={patient.id} patient={patient} />
             ))}
           </div>
           <div className="mt-8 text-center">
             <Link
               to="/"
-              className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 transition rounded-xl text-white"
+              className="inline-block px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white transition backdrop-blur"
             >
-              Back to Home
+              ← Back to Home
             </Link>
           </div>
         </div>
