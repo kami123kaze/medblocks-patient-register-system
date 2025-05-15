@@ -11,6 +11,12 @@ const Register = () => {
     phone: "",
   });
 
+  const [popup, setPopup] = useState({
+    visible: false,
+    success: false,
+    message: "",
+  });
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -31,6 +37,16 @@ const Register = () => {
 
       const verify = await db.query('SELECT * FROM patient');
       console.log("All rows:", verify.rows);
+
+
+       setPopup({
+        visible: true,
+        success: true,
+        message: `Patient added successfully! New ID: ${result.rows[0].id}`,
+      });
+
+      // reset form optional will check if looks good
+      setForm({ name: "", dob: "", email: "", phone: "" });
     } catch (error) {
       console.error("Insert error:", error);
     }
@@ -121,6 +137,36 @@ const Register = () => {
           </div>
         </form>
       </div>
+
+      {/* Popup Modal */}
+      {popup.visible && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+          <div className="bg-black/90 p-8 rounded-xl max-w-md w-full text-center text-white shadow-lg">
+            <h2
+              className={`text-2xl font-bold mb-4 ${
+                popup.success ? "text-green-400" : "text-red-400"
+              }`}
+            >
+              {popup.success ? "Success!" : "Error"}
+            </h2>
+            <p className="mb-6">{popup.message}</p>
+            <div className="flex justify-center gap-6">
+              <button
+                onClick={() => setPopup({ ...popup, visible: false })}
+                className="px-6 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
+              >
+                Close
+              </button>
+              <button
+                onClick={() => navigate("/patients")}
+                className="px-6 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 transition"
+              >
+                Go to Patient List
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
