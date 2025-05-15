@@ -1,18 +1,18 @@
-import { PGlite } from '@electric-sql/pglite';
+// db.js
+import { PGliteWorker } from '@electric-sql/pglite/worker';
 
 let db = null;
+
 export async function initDB() {
   if (!db) {
-    db = await PGlite.create({ dataDir: 'idb://patient-db' });
-    await db.exec(`
-      CREATE TABLE IF NOT EXISTS patient (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        dob TEXT NOT NULL,
-        email TEXT NOT NULL,
-        phone TEXT NOT NULL
-      );
-    `);
+    db = await PGliteWorker.create(
+      new Worker(new URL('./pglite-worker.js', import.meta.url), {
+        type: 'module',
+      }),
+      {
+        dataDir: 'idb://patient-db',
+      }
+    );
   }
   return db;
 }

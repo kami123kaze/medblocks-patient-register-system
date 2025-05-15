@@ -19,7 +19,7 @@ const Register = () => {
     e.preventDefault();
     const db = await initDB();
 
-    const { name, dob, email, phone } = form; // ✅ destructure properly
+    const { name, dob, email, phone } = form; 
 
     try {
       const result = await db.query(
@@ -35,28 +35,6 @@ const Register = () => {
       console.error("Insert error:", error);
     }
   };
-     
-      /*  try {
-                const result = await db.exec({
-                sql: 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)',
-                args: [form.name, form.dob, form.email, form.phone]
-                });
-
-               const sql = 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)';               console.log("SQL:", sql, "ARGS:", [form.name, form.dob, form.email, form.phone]);
-               console.log("Insert result:", result); // Log the result of the insertion {Debugging}
-
-
-               //manual testing 
-             
-
-
-              // Verify if the row is being inserted by querying the data  {debugging}
-              const verify = await db.query("SELECT * FROM patients");
-              console.log("Current rows in patients table:", verify.rows);
-
-            } catch (error) {
-              console.error("Error executing INSERT:", error);
-            }} */
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-br from-black via-[#0f172a] to-[#1e293b] text-white">
