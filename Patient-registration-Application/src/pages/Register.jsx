@@ -42,7 +42,7 @@ const Register = () => {
        setPopup({
         visible: true,
         success: true,
-        message: `Patient added successfully! New ID: ${result.rows[0].id}`,
+        message: `Patient named : ${name} added successfully! New ID: ${result.rows[0].id} `,
       });
 
       // reset form optional will check if looks good

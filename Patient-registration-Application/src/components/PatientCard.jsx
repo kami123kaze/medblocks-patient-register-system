@@ -13,15 +13,7 @@ const PatientCard = ({ patient }) => {
       <p className="text-gray-200 mb-2"><strong>Email: </strong>{patient.email}</p>
       <p className="text-gray-200 mb-4"><strong>Phone: </strong>{patient.phone}</p>
 
-      {/* Action Buttons */}
-      <div className="flex justify-around gap-4">
-        <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
-          Edit
-        </button>
-        <button className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition">
-          Delete
-        </button>
-      </div>
+      
     </div>
   );
 };

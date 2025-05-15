@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PatientCard from "../components/PatientCard";
 import { initDB } from '../lib/db';
 
-
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
 
@@ -23,7 +22,7 @@ const PatientList = () => {
   }, []);
 
   return (
-   <div className="min-h-screen w-screen overflow-y-auto bg-gradient-to-br  from-black via-[#1a0c1e] to-[#2e0d29] text-white">
+   <div className="min-h-screen w-screen overflow-y-auto bg-gradient-to-br from-black via-[#1a0c1e] to-[#2e0d29] text-white">
       {/* Subtle glowing overlays */}
       <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-pink-700 opacity-10 blur-[120px] rounded-full z-0" />
       <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-fuchsia-900 opacity-10 blur-[100px] rounded-full z-0" />
