@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDB } from '../lib/db';
+import { initDB  } from '../lib/db';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,26 +15,48 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-       
-           const db = await getDB(); // Initialize and check if DB exists 
-           await db.exec({
-    sql: 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)',
-    args: [form.name, form.dob, form.email, form.phone],
-  });
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    const db = await initDB();
 
-  console.log("Registered:", form);
+    const { name, dob, email, phone } = form; // ✅ destructure properly
 
-  // Fetch and log the newly inserted data {Debugging}
-  const result = await db.query('SELECT * FROM patients');
-  console.log('Updated Patients List:', result.rows);
+    try {
+      const result = await db.query(
+        'INSERT INTO patient (name, dob, email, phone) VALUES ($1, $2, $3, $4) RETURNING id;',
+        [name, dob, email, phone]
+      );
 
-  // Redirect to patients page
-  navigate("/patients");
-    };
+      console.log('New ID:', result.rows[0].id);
 
+      const verify = await db.query('SELECT * FROM patient');
+      console.log("All rows:", verify.rows);
+    } catch (error) {
+      console.error("Insert error:", error);
+    }
+  };
+     
+      /*  try {
+                const result = await db.exec({
+                sql: 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)',
+                args: [form.name, form.dob, form.email, form.phone]
+                });
+
+               const sql = 'INSERT INTO patients (name, dob, email, phone) VALUES (?, ?, ?, ?)';               console.log("SQL:", sql, "ARGS:", [form.name, form.dob, form.email, form.phone]);
+               console.log("Insert result:", result); // Log the result of the insertion {Debugging}
+
+
+               //manual testing 
+             
+
+
+              // Verify if the row is being inserted by querying the data  {debugging}
+              const verify = await db.query("SELECT * FROM patients");
+              console.log("Current rows in patients table:", verify.rows);
+
+            } catch (error) {
+              console.error("Error executing INSERT:", error);
+            }} */
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-br from-black via-[#0f172a] to-[#1e293b] text-white">

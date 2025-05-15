@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Home,PatientList,Register } from './pages/index';
+
 function App() {
   return (
     <Routes>

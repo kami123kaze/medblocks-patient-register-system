@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PatientCard from "../components/PatientCard";
-import { getDB } from '../lib/db';
+import { initDB } from '../lib/db';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {
-     const fetchPatients = async () => {
-
-      const db = await getDB(); // Initialize db
-      const result = await db.query('SELECT * FROM patients');
-      console.log(result.rows);
-      
-      setPatients(result.rows);
-      
+    const fetchPatients = async () => {
+      try {
+        const db = await initDB(); 
+        const result = await db.query('SELECT * FROM patient ORDER BY id DESC');
+        console.log('Fetched patients:', result.rows);
+        setPatients(result.rows);
+      } catch (error) {
+        console.error('Error fetching patients:', error);
+      }
     };
 
     fetchPatients();
