@@ -34,10 +34,8 @@ const Register = () => {
         [name, dob, email, phone]
       );
       channel.postMessage("patient-updated");
-      console.log('New ID:', result.rows[0].id);
 
-      const verify = await db.query('SELECT * FROM patient');
-      console.log("All rows:", verify.rows);
+      
 
        setPopup({
         visible: true,
@@ -45,7 +43,7 @@ const Register = () => {
         message: `Patient named : ${name} added successfully! New ID: ${result.rows[0].id} `,
       });
 
-      // reset form optional will check if looks good
+      // reset form optional will check if looks good {also prevents re-submits}
       setForm({ name: "", dob: "", email: "", phone: "" });
     } catch (error) {
       console.error("Insert error:", error);

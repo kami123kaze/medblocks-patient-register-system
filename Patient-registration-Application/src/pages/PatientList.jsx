@@ -64,7 +64,6 @@ const PatientList = () => {
       {/* Glossy dark overlay */}
       <div className="absolute inset-0 backdrop-blur-md bg-black/30 z-10" />
       
-       {/* SQL Query Input + Run Button */}
    
 
       {/* Foreground Content */}
@@ -78,12 +77,15 @@ const PatientList = () => {
           </div>
 
       ) : (
+               /* SQL Query Input + Run Button */
+
       <div className="relative z-20 flex items-center justify-center h-full p-4">
         <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-10 rounded-2xl w-full max-w-6xl shadow-2xl">
           <h1 className="text-3xl font-semibold mb-6 text-center text-white drop-shadow">
             Registered Patients
           </h1>
-           <div className="w-full bg-black/60 border border-white/10 backdrop-blur-md p-6 rounded-2xl shadow-2xl">          <SqlQueryInput query={query} setQuery={setQuery} />
+           <div className="w-full bg-black/60 border border-white/10 backdrop-blur-md p-6 rounded-2xl shadow-2xl">          
+           <SqlQueryInput query={query} setQuery={setQuery} />
           <button
             className="mt-4 px-6 py-3 rounded bg-fuchsia-700 hover:bg-fuchsia-900 text-white disabled:opacity-50"
             onClick={fetchPatients}
