@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { initDB  } from '../lib/db';
 
+const channel = new BroadcastChannel("patients");
 const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -32,13 +33,13 @@ const Register = () => {
         'INSERT INTO patient (name, dob, email, phone) VALUES ($1, $2, $3, $4) RETURNING id;',
         [name, dob, email, phone]
       );
-
+      channel.postMessage("patient-updated");
       console.log('New ID:', result.rows[0].id);
 
       const verify = await db.query('SELECT * FROM patient');
       console.log("All rows:", verify.rows);
 
-
+      channel.close(); 
        setPopup({
         visible: true,
         success: true,

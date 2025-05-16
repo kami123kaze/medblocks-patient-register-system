@@ -22,12 +22,30 @@ const PatientList = () => {
           }
       };
 
-   useEffect(() => {
-        fetchPatients();  
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
-      
+  useEffect(() => {
+    fetchPatients();
 
+    // Create the BroadcastChannel
+    const channel = new BroadcastChannel("patients");
+
+    // Listen for messages from other tabs
+    const listener = (event) => {
+      if (event.data === "patient-updated") {
+        fetchPatients();
+      }
+    };
+
+    channel.addEventListener("message", listener);
+
+    
+    return () => {
+      channel.removeEventListener("message", listener);
+      channel.close();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+      
+       
 
    
   return (
