@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import PatientCard from "../components/PatientCard";
+import {PatientCard , SqlQueryInput} from "../components/index";
 import { initDB } from '../lib/db';
+
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState('SELECT * FROM patient ORDER BY id DESC');
 
-  useEffect(() => {
-    const fetchPatients = async () => {
+   const fetchPatients = async () => {
       setLoading(true);
-      try {
-        const db = await initDB(); 
-        const result = await db.query('SELECT * FROM patient ORDER BY id DESC');
-        console.log('Fetched patients:', result.rows);
-        setPatients(result.rows);
-      } catch (error) {
-        console.error('Error fetching patients:', error);
-      } finally{ setLoading(false);}
-    };
+          try {
+            const db = await initDB();
+            const result = await db.query(query);
+            setPatients(result.rows);
+          } catch (error) {
+            console.error('Error fetching patients:', error);
+          } finally {
+            setLoading(false);
+          }
+      };
 
-    fetchPatients();
-  }, []);
+   useEffect(() => {
+        fetchPatients();  
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+      
 
 
    
@@ -40,6 +45,9 @@ const PatientList = () => {
 
       {/* Glossy dark overlay */}
       <div className="absolute inset-0 backdrop-blur-md bg-black/30 z-10" />
+      
+       {/* SQL Query Input + Run Button */}
+   
 
       {/* Foreground Content */}
       {loading ? (
@@ -50,13 +58,22 @@ const PatientList = () => {
              </h1>
           </div>
           </div>
-          
+
       ) : (
       <div className="relative z-20 flex items-center justify-center h-full p-4">
         <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-10 rounded-2xl w-full max-w-6xl shadow-2xl">
           <h1 className="text-3xl font-semibold mb-6 text-center text-white drop-shadow">
             Registered Patients
           </h1>
+           <div className="w-full bg-black/60 border border-white/10 backdrop-blur-md p-6 rounded-2xl shadow-2xl">          <SqlQueryInput query={query} setQuery={setQuery} />
+          <button
+            className="mt-4 px-6 py-3 rounded bg-fuchsia-700 hover:bg-fuchsia-900 text-white disabled:opacity-50"
+            onClick={fetchPatients}
+            disabled={loading}
+          >
+            Run Query
+          </button>
+        </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {patients.map((patient) => (
               <PatientCard key={patient.id} patient={patient} />

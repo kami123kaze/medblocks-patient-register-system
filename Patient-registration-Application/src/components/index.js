@@ -1,4 +1,5 @@
-import Example from "./Example";
+import PatientCard from "./PatientCard";
+import SqlQueryInput from "./SqlQueryInput";
 
 
-export {Example};
+export {PatientCard , SqlQueryInput};
