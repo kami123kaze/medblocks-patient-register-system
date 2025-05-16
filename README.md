@@ -80,7 +80,9 @@ A React-based frontend application for managing patient registrations, using **P
 
 
 
-
-
+## Link for the deployed Website (Vercel)
+```bash
+https://medblocks-patient-register-system-zy6a.vercel.app/
+```
 
 
