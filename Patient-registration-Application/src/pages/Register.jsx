@@ -39,7 +39,6 @@ const Register = () => {
       const verify = await db.query('SELECT * FROM patient');
       console.log("All rows:", verify.rows);
 
-      channel.close(); 
        setPopup({
         visible: true,
         success: true,
