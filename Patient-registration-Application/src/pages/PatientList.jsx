@@ -92,11 +92,18 @@ const PatientList = () => {
             Run Query
           </button>
         </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {patients.map((patient) => (
-              <PatientCard key={patient.id} patient={patient} />
-            ))}
-          </div>
+         {patients.length === 0 ? (
+             <p className="text-center text-3xl text-pink-500 drop-shadow-[0_0_10px_rgb(219,39,119)] mt-6">
+                There are no entries.
+              </p>
+                                      ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {patients.map((patient) => (
+                  <PatientCard key={patient.id} patient={patient} />
+                ))}
+              </div>
+          )}
+
           <div className="mt-8 text-center">
             <Link
               to="/"
