@@ -5,9 +5,11 @@ import { initDB } from '../lib/db';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPatients = async () => {
+      setLoading(true);
       try {
         const db = await initDB(); 
         const result = await db.query('SELECT * FROM patient ORDER BY id DESC');
@@ -15,12 +17,14 @@ const PatientList = () => {
         setPatients(result.rows);
       } catch (error) {
         console.error('Error fetching patients:', error);
-      }
+      } finally{ setLoading(false);}
     };
 
     fetchPatients();
   }, []);
 
+
+   
   return (
    <div className="min-h-screen w-screen overflow-y-auto bg-gradient-to-br from-black via-[#1a0c1e] to-[#2e0d29] text-white">
       {/* Subtle glowing overlays */}
@@ -38,6 +42,16 @@ const PatientList = () => {
       <div className="absolute inset-0 backdrop-blur-md bg-black/30 z-10" />
 
       {/* Foreground Content */}
+      {loading ? (
+         <div className="relative z-20 flex items-center justify-center h-full p-4">
+           <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-10 rounded-2xl w-full max-w-6xl shadow-2xl">
+            <h1 className="text-2xl font-semibold text-center text-white drop-shadow">
+        Loading...
+             </h1>
+          </div>
+          </div>
+          
+      ) : (
       <div className="relative z-20 flex items-center justify-center h-full p-4">
         <div className="bg-black/40 border border-white/10 backdrop-blur-xl p-10 rounded-2xl w-full max-w-6xl shadow-2xl">
           <h1 className="text-3xl font-semibold mb-6 text-center text-white drop-shadow">
@@ -57,9 +71,10 @@ const PatientList = () => {
             </Link>
           </div>
         </div>
-      </div>
+      
     </div>
-  );
-};
+      )}
+  </div>
+)};
 
 export default PatientList;
