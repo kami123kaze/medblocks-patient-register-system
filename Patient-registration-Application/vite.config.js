@@ -8,5 +8,14 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
-    optimizeDeps: { exclude: ['@electric-sql/pglite'] },
+    optimizeDeps: { 
+      exclude: ['@electric-sql/pglite'] 
+    },
+     worker: {
+    format: 'es', 
+  },
+   build: {
+    target: 'esnext',
+  },
+  
 })
