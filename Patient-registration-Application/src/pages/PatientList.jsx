@@ -8,6 +8,7 @@ const PatientList = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState('SELECT * FROM patient ORDER BY id DESC');
+  const [totalPatients, setTotalPatients] = useState(0);
 
    const fetchPatients = async () => {
       setLoading(true);
@@ -15,6 +16,7 @@ const PatientList = () => {
             const db = await initDB();
             const result = await db.query(query);
             setPatients(result.rows);
+            setTotalPatients(result.rows.length);
           } catch (error) {
             console.error('Error fetching patients:', error);
           } finally {
@@ -84,6 +86,8 @@ const PatientList = () => {
           <h1 className="text-3xl font-semibold mb-6 text-center text-white drop-shadow">
             Registered Patients
           </h1>
+          <p className="text-center text-pink-400 mb-6 text-lg font-medium drop-shadow">
+            Total Patients: {totalPatients} </p>
            <div className="w-full bg-black/60 border border-white/10 backdrop-blur-md p-6 rounded-2xl shadow-2xl">          
            <SqlQueryInput query={query} setQuery={setQuery} />
           <button
